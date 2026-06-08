@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meridian Medical Group | Advanced Primary Care Los Angeles</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --white: #ffffff;
+  --bg: #f4f6f9;
+  --navy: #0c1f3f;
+  --navy2: #132a52;
+  --teal: #009e8e;
+  --teal2: #00c4b0;
+  --teal-glow: rgba(0,158,142,0.15);
+  --slate: #4e5f7a;
+  --muted: #8898b0;
+  --line: rgba(12,31,63,0.08);
+}
+
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--white);color:var(--navy);overflow-x:hidden}
+
+/* ── PROGRESS BAR ── */
+#progress{position:fixed;top:0;left:0;height:3px;background:var(--teal);z-index:9999;width:0%;transition:width 0.1s linear}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:500;
+  height:68px;padding:0 48px;
+  display:flex;align-items:center;justify-content:space-between;
+  background:rgba(255,255,255,0.0);
+  transition:background 0.35s,box-shadow 0.35s;
+}
+nav.solid{background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);box-shadow:0 1px 0 var(--line)}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo-cross{
+  width:30px;height:30px;position:relative;
+  display:flex;align-items:center;justify-content:center;
+}
+.logo-cross::before,.logo-cross::after{
+  content:'';position:absolute;background:var(--teal);border-radius:2px;
+}
+.logo-cross::before{width:4px;height:20px}
+.logo-cross::after{width:20px;height:4px}
+nav:not(.solid) .logo-cross::before,
+nav:not(.solid) .logo-cross::after{background:rgba(255,255,255,0.9)}
+.logo-name{font-family:'Syne',sans-serif;font-size:17px;font-weight:600;letter-spacing:0.02em;color:var(--navy)}
+nav:not(.solid) .logo-name{color:#fff}
+.nav-mid{display:flex;gap:32px;list-style:none}
+.nav-mid a{font-size:13px;font-weight:400;letter-spacing:0.02em;color:var(--slate);text-decoration:none;transition:color 0.2s}
+nav:not(.solid) .nav-mid a{color:rgba(255,255,255,0.65)}
+.nav-mid a:hover,.nav-mid a:hover{color:var(--teal)}
+.nav-book{
+  font-size:13px;font-weight:500;letter-spacing:0.03em;
+  color:#fff;background:var(--teal);
+  padding:9px 22px;border-radius:100px;
+  text-decoration:none;
+  transition:background 0.2s,transform 0.15s;
+}
+.nav-book:hover{background:var(--teal2);transform:translateY(-1px)}
+
+/* ── HERO — full bleed image, text centered ── */
+.hero{
+  position:relative;height:100vh;min-height:680px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:0 24px;
+  overflow:hidden;background:var(--navy);
+}
+.hero-img{
+  position:absolute;inset:0;
+  background:url('https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=1800&q=80&auto=format&fit=crop') center/cover no-repeat;
+  opacity:0;
+  transition:opacity 1.4s ease;
+  transform:scale(1.04);
+  animation:zoomOut 14s ease-out forwards;
+}
+@keyframes zoomOut{from{transform:scale(1.06)}to{transform:scale(1.0)}}
+.hero-img.loaded{opacity:0.28}
+.hero-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(12,31,63,0.55) 0%,rgba(12,31,63,0.72) 60%,var(--navy) 100%);
+}
+
+/* Pulse rings */
+.pulse-wrap{
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  width:600px;height:600px;pointer-events:none;
+}
+.pulse-ring{
+  position:absolute;inset:0;border-radius:50%;
+  border:1px solid rgba(0,158,142,0.25);
+  animation:expandRing 4s ease-out infinite;
+}
+.pulse-ring:nth-child(2){animation-delay:1.3s}
+.pulse-ring:nth-child(3){animation-delay:2.6s}
+@keyframes expandRing{
+  0%{transform:scale(0.3);opacity:0.7}
+  100%{transform:scale(1.1);opacity:0}
+}
+
+.hero-content{position:relative;z-index:2;max-width:780px}
+.hero-pill{
+  display:inline-flex;align-items:center;gap:7px;
+  background:rgba(0,158,142,0.15);border:1px solid rgba(0,196,176,0.3);
+  border-radius:100px;padding:5px 14px;
+  font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--teal2);margin-bottom:28px;
+  opacity:0;animation:up 0.8s 0.2s ease forwards;
+}
+.hero-pill-dot{width:6px;height:6px;border-radius:50%;background:var(--teal2);animation:blink 1.5s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.2}}
+.hero h1{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(40px,6vw,80px);
+  font-weight:700;line-height:1.04;
+  color:#fff;letter-spacing:-0.02em;
+  margin-bottom:22px;
+  opacity:0;animation:up 0.9s 0.35s ease forwards;
+}
+.hero h1 span{
+  position:relative;display:inline-block;
+  color:var(--teal2);
+}
+.hero-sub{
+  font-size:17px;font-weight:300;color:rgba(255,255,255,0.52);
+  line-height:1.75;max-width:540px;margin:0 auto 40px;
+  opacity:0;animation:up 0.9s 0.5s ease forwards;
+}
+.hero-btns{
+  display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;
+  opacity:0;animation:up 0.9s 0.65s ease forwards;
+}
+.btn-primary{
+  font-size:13px;font-weight:500;letter-spacing:0.03em;
+  color:#fff;background:var(--teal);
+  padding:14px 30px;border-radius:100px;text-decoration:none;
+  transition:background 0.2s,transform 0.15s,box-shadow 0.2s;
+  display:inline-flex;align-items:center;gap:8px;
+}
+.btn-primary:hover{background:var(--teal2);transform:translateY(-2px);box-shadow:0 10px 28px rgba(0,158,142,0.4)}
+.btn-sec{
+  font-size:13px;font-weight:400;color:rgba(255,255,255,0.55);
+  border:1px solid rgba(255,255,255,0.18);border-radius:100px;
+  padding:14px 26px;text-decoration:none;
+  transition:border-color 0.2s,color 0.2s;
+}
+.btn-sec:hover{border-color:var(--teal2);color:var(--teal2)}
+
+@keyframes up{to{opacity:1;transform:translateY(0)}from{opacity:0;transform:translateY(22px)}}
+
+/* Hero bottom ribbon */
+.hero-ribbon{
+  position:absolute;bottom:0;left:0;right:0;z-index:3;
+  background:#fff;
+  display:grid;grid-template-columns:repeat(4,1fr);
+  border-top:none;
+}
+.ribbon-item{
+  padding:28px 36px;
+  border-right:1px solid var(--line);
+  display:flex;align-items:center;gap:16px;
+}
+.ribbon-item:last-child{border-right:none}
+.ribbon-icon{
+  width:40px;height:40px;flex-shrink:0;
+  background:var(--teal-glow);border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  color:var(--teal);
+}
+.ribbon-label{font-size:11px;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
+.ribbon-val{font-family:'Syne',sans-serif;font-size:15px;font-weight:600;color:var(--navy)}
+
+/* ── SHARED ── */
+.section-eyebrow{
+  font-size:11px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--teal);margin-bottom:12px;
+  display:flex;align-items:center;gap:10px;
+}
+.section-eyebrow::before{content:'';display:block;width:18px;height:2px;background:var(--teal);border-radius:2px}
+.section-h{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(32px,3.6vw,50px);
+  font-weight:700;line-height:1.1;letter-spacing:-0.02em;color:var(--navy);
+}
+.section-h em{font-style:italic;font-family:'DM Sans',sans-serif;font-weight:300;color:var(--slate)}
+
+/* ── SERVICES — tabbed layout ── */
+.services{padding:110px 48px;background:#fff}
+.services-top{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:end;margin-bottom:64px}
+.services-desc{font-size:15px;font-weight:300;color:var(--slate);line-height:1.75}
+.services-tabs{display:flex;gap:0;border-bottom:1px solid var(--line);margin-bottom:0}
+.stab{
+  font-size:12px;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;
+  color:var(--muted);padding:12px 22px;cursor:pointer;
+  border-bottom:2px solid transparent;margin-bottom:-1px;
+  transition:color 0.2s,border-color 0.2s;
+}
+.stab.active,.stab:hover{color:var(--teal);border-bottom-color:var(--teal)}
+
+.service-panels{margin-top:0}
+.service-panel{display:none}
+.service-panel.active{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--line)}
+
+.sp-left{padding:56px 52px;border-right:1px solid var(--line)}
+.sp-icon{
+  width:52px;height:52px;background:var(--teal-glow);border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  color:var(--teal);margin-bottom:28px;
+}
+.sp-name{font-family:'Syne',sans-serif;font-size:26px;font-weight:600;color:var(--navy);margin-bottom:14px}
+.sp-desc{font-size:15px;font-weight:300;color:var(--slate);line-height:1.75;margin-bottom:32px}
+.sp-link{
+  font-size:13px;font-weight:500;color:var(--teal);text-decoration:none;
+  display:inline-flex;align-items:center;gap:6px;
+  border-bottom:1px solid rgba(0,158,142,0.3);padding-bottom:2px;
+  transition:gap 0.2s,border-color 0.2s;
+}
+.sp-link:hover{gap:10px;border-color:var(--teal)}
+
+.sp-right{padding:56px 52px;background:var(--bg)}
+.sp-what{font-size:11px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-bottom:24px}
+.sp-list{list-style:none;display:flex;flex-direction:column;gap:14px}
+.sp-list li{
+  display:flex;align-items:flex-start;gap:12px;
+  font-size:14px;font-weight:300;color:var(--slate);line-height:1.6;
+}
+.sp-list li::before{
+  content:'';flex-shrink:0;
+  width:6px;height:6px;border-radius:50%;background:var(--teal);
+  margin-top:7px;
+}
+
+/* ── NUMBERS ── */
+.numbers{
+  background:var(--navy);
+  display:grid;grid-template-columns:repeat(4,1fr);
+}
+.num-cell{
+  padding:60px 44px;border-right:1px solid rgba(255,255,255,0.06);
+  text-align:center;
+  position:relative;overflow:hidden;
+}
+.num-cell:last-child{border-right:none}
+.num-cell::before{
+  content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);
+  width:0;height:3px;background:var(--teal);
+  transition:width 0.7s cubic-bezier(0.22,1,0.36,1);
+}
+.num-cell.triggered::before{width:48px}
+.num-val{
+  font-family:'Syne',sans-serif;font-size:54px;font-weight:700;
+  color:#fff;line-height:1;margin-bottom:8px;letter-spacing:-0.03em;
+}
+.num-val sup{font-size:28px;vertical-align:super;color:var(--teal)}
+.num-label{font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.3)}
+
+/* ── DOCTORS ── */
+.doctors{padding:110px 48px;background:var(--bg)}
+.doctors-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:56px}
+.see-all{font-size:12px;font-weight:500;color:var(--teal);text-decoration:none;letter-spacing:0.06em;text-transform:uppercase;display:flex;align-items:center;gap:6px;transition:gap 0.2s}
+.see-all:hover{gap:10px}
+.doctors-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.doc-card{background:#fff;overflow:hidden;transition:transform 0.35s cubic-bezier(0.22,1,0.36,1),box-shadow 0.35s}
+.doc-card:hover{transform:translateY(-8px);box-shadow:0 24px 52px rgba(12,31,63,0.1)}
+.doc-photo{
+  position:relative;overflow:hidden;
+  height:260px;background:var(--navy2);
+}
+.doc-photo img{
+  width:100%;height:100%;
+  object-fit:cover;object-position:top;display:block;
+  filter:grayscale(30%);
+  transition:filter 0.4s,transform 0.5s cubic-bezier(0.22,1,0.36,1);
+}
+.doc-card:hover .doc-photo img{filter:grayscale(0%);transform:scale(1.04)}
+.doc-badge{
+  position:absolute;bottom:14px;left:14px;
+  background:var(--teal);color:#fff;
+  font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;
+  padding:4px 10px;border-radius:4px;
+}
+.doc-info{padding:22px 22px 26px}
+.doc-name{font-family:'Syne',sans-serif;font-size:17px;font-weight:600;color:var(--navy);margin-bottom:3px}
+.doc-role{font-size:12px;color:var(--teal);font-weight:500;margin-bottom:10px}
+.doc-bio{font-size:13px;font-weight:300;color:var(--slate);line-height:1.6}
+
+/* ── PROCESS ── */
+.process{padding:110px 48px;background:#fff}
+.process-head{max-width:520px;margin-bottom:72px}
+.process-flow{display:grid;grid-template-columns:repeat(4,1fr);position:relative}
+.process-flow::after{
+  content:'';position:absolute;
+  top:30px;left:calc(12.5% + 16px);right:calc(12.5% + 16px);
+  height:1px;background:repeating-linear-gradient(90deg,var(--teal) 0,var(--teal) 6px,transparent 6px,transparent 14px);
+}
+.pstep{padding:0 28px;text-align:center}
+.pstep-num{
+  width:60px;height:60px;border-radius:50%;
+  background:#fff;border:2px solid var(--line);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:var(--navy);
+  margin:0 auto 24px;position:relative;z-index:2;
+  transition:background 0.3s,border-color 0.3s,color 0.3s,transform 0.3s;
+}
+.pstep:hover .pstep-num{background:var(--teal);border-color:var(--teal);color:#fff;transform:scale(1.1)}
+.pstep-name{font-family:'Syne',sans-serif;font-size:16px;font-weight:600;color:var(--navy);margin-bottom:10px}
+.pstep-desc{font-size:13px;font-weight:300;color:var(--slate);line-height:1.65}
+
+/* ── TESTIMONIALS ── */
+.testimonials{padding:110px 48px;background:var(--navy);position:relative;overflow:hidden}
+.test-bg-text{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  font-family:'Syne',sans-serif;font-size:240px;font-weight:700;
+  color:rgba(255,255,255,0.02);letter-spacing:-0.05em;white-space:nowrap;pointer-events:none;
+}
+.test-head{text-align:center;margin-bottom:64px;position:relative;z-index:2}
+.test-head .section-eyebrow{justify-content:center}
+.test-head .section-eyebrow::before{display:none}
+.test-head .section-h{color:#fff}
+.test-head .section-h em{color:rgba(255,255,255,0.4)}
+.test-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;position:relative;z-index:2}
+.tcard{
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.07);
+  padding:36px 32px;
+  transition:background 0.3s,transform 0.3s;
+  border-radius:4px;
+}
+.tcard:hover{background:rgba(255,255,255,0.07);transform:translateY(-4px)}
+.tcard-stars{display:flex;gap:3px;margin-bottom:20px}
+.tcard-star{color:var(--teal2);font-size:14px}
+.tcard-text{font-size:15px;font-weight:300;color:rgba(255,255,255,0.65);line-height:1.75;font-style:italic;margin-bottom:24px}
+.tcard-author{font-family:'Syne',sans-serif;font-size:14px;font-weight:600;color:#fff}
+.tcard-detail{font-size:12px;color:rgba(255,255,255,0.3);margin-top:2px}
+
+/* ── INSURANCE ── */
+.insurance{padding:52px 48px;background:var(--bg);border-top:1px solid var(--line)}
+.ins-row{display:flex;align-items:center;gap:0;justify-content:center;flex-wrap:wrap}
+.ins-label{font-size:11px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);padding-right:40px;border-right:1px solid var(--line);margin-right:40px}
+.ins-name{font-family:'Syne',sans-serif;font-size:14px;font-weight:600;color:var(--muted);padding:0 28px;transition:color 0.2s;cursor:default;border-right:1px solid var(--line)}
+.ins-name:last-child{border-right:none}
+.ins-name:hover{color:var(--navy)}
+
+/* ── CONTACT ── */
+.contact{padding:110px 48px;background:#fff}
+.contact-wrap{display:grid;grid-template-columns:1fr 1.4fr;gap:100px;align-items:start}
+.contact-left .section-h{margin-bottom:18px}
+.contact-left p{font-size:15px;font-weight:300;color:var(--slate);line-height:1.75;margin-bottom:40px;max-width:360px}
+.cinfo{display:flex;align-items:flex-start;gap:14px;margin-bottom:20px}
+.cinfo-icon{
+  width:38px;height:38px;flex-shrink:0;
+  background:var(--teal-glow);border-radius:9px;
+  display:flex;align-items:center;justify-content:center;color:var(--teal);
+}
+.cinfo-l{font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
+.cinfo-v{font-size:14px;color:var(--navy);line-height:1.4}
+
+.cform{background:var(--bg);padding:48px;border:1px solid var(--line)}
+.cform h3{font-family:'Syne',sans-serif;font-size:22px;font-weight:600;color:var(--navy);margin-bottom:28px}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.fg{margin-bottom:16px}
+.fg label{display:block;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.fg input,.fg select,.fg textarea{
+  width:100%;background:#fff;
+  border:1px solid var(--line);
+  color:var(--navy);font-family:'DM Sans',sans-serif;
+  font-size:14px;font-weight:300;padding:12px 14px;
+  border-radius:6px;outline:none;
+  transition:border-color 0.2s;
+}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--teal)}
+.fg textarea{resize:none;height:90px}
+.fg select option{background:#fff}
+.fsubmit{
+  width:100%;background:var(--navy);color:#fff;
+  font-family:'Syne',sans-serif;font-size:13px;font-weight:600;
+  letter-spacing:0.06em;padding:15px;border:none;border-radius:6px;
+  cursor:pointer;margin-top:6px;
+  transition:background 0.2s,transform 0.15s;
+}
+.fsubmit:hover{background:var(--teal);transform:translateY(-1px)}
+
+/* ── FOOTER ── */
+footer{
+  background:var(--navy);border-top:1px solid rgba(255,255,255,0.05);
+  padding:36px 48px;
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;
+}
+.f-logo{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:#fff;letter-spacing:0.02em}
+.f-logo span{color:var(--teal)}
+.f-links{display:flex;gap:24px;list-style:none}
+.f-links a{font-size:12px;color:rgba(255,255,255,0.3);text-decoration:none;transition:color 0.2s}
+.f-links a:hover{color:var(--teal)}
+.f-copy{font-size:11px;color:rgba(255,255,255,0.2)}
+
+/* ── REVEAL ── */
+.r{opacity:0;transform:translateY(20px);transition:opacity 0.65s ease,transform 0.65s ease}
+.r.in{opacity:1;transform:none}
+.d1{transition-delay:0.08s}.d2{transition-delay:0.16s}.d3{transition-delay:0.24s}.d4{transition-delay:0.32s}
+
+@media(max-width:960px){
+  nav{padding:0 20px}
+  nav .nav-mid,nav .nav-book{display:none}
+  .hero-ribbon{grid-template-columns:repeat(2,1fr)}
+  section,.services,.doctors,.process,.testimonials,.contact{padding:80px 20px}
+  .services-top{grid-template-columns:1fr;gap:20px}
+  .service-panel.active{grid-template-columns:1fr}
+  .sp-left{border-right:none;border-bottom:1px solid var(--line)}
+  .numbers{grid-template-columns:repeat(2,1fr)}
+  .doctors-grid{grid-template-columns:repeat(2,1fr)}
+  .process-flow{grid-template-columns:1fr 1fr;gap:32px}
+  .process-flow::after{display:none}
+  .test-grid{grid-template-columns:1fr}
+  .contact-wrap{grid-template-columns:1fr;gap:48px}
+  .cform{padding:28px 20px}
+  .frow{grid-template-columns:1fr}
+  footer{flex-direction:column;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="logo">
+    <div class="logo-cross"></div>
+    <span class="logo-name">Meridian Medical</span>
+  </a>
+  <ul class="nav-mid">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#doctors">Doctors</a></li>
+    <li><a href="#process">Patient Journey</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-book">Book Appointment</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-img" id="heroImg"></div>
+  <div class="hero-overlay"></div>
+  <div class="pulse-wrap">
+    <div class="pulse-ring"></div>
+    <div class="pulse-ring"></div>
+    <div class="pulse-ring"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-pill"><div class="hero-pill-dot"></div>Now Accepting New Patients · West Hollywood</div>
+    <h1>Advanced Care.<br><span>Real Physicians.</span></h1>
+    <p class="hero-sub">Meridian Medical Group brings board-certified specialists and primary care physicians together under one roof — with same-week appointments, no referral maze.</p>
+    <div class="hero-btns">
+      <a href="#contact" class="btn-primary">
+        Schedule a Visit
+        <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M1 5h12M8 1.5l3.5 3.5L8 8.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="#services" class="btn-sec">Explore Services</a>
+    </div>
+  </div>
+  <div class="hero-ribbon">
+    <div class="ribbon-item">
+      <div class="ribbon-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0112 2a8 8 0 018 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
+      </div>
+      <div>
+        <div class="ribbon-label">Location</div>
+        <div class="ribbon-val">West Hollywood, CA</div>
+      </div>
+    </div>
+    <div class="ribbon-item">
+      <div class="ribbon-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+      </div>
+      <div>
+        <div class="ribbon-label">Appointments</div>
+        <div class="ribbon-val">Same-Week Available</div>
+      </div>
+    </div>
+    <div class="ribbon-item">
+      <div class="ribbon-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+      </div>
+      <div>
+        <div class="ribbon-label">Physicians</div>
+        <div class="ribbon-val">18 Specialists On-Site</div>
+      </div>
+    </div>
+    <div class="ribbon-item">
+      <div class="ribbon-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      </div>
+      <div>
+        <div class="ribbon-label">Patient Rating</div>
+        <div class="ribbon-val">4.9 · 1,200+ Reviews</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="services-top">
+    <div>
+      <div class="section-eyebrow r">Our Specialties</div>
+      <h2 class="section-h r d1">Everything You Need,<br><em>One Address</em></h2>
+    </div>
+    <p class="services-desc r d2">From annual physicals to complex internal medicine — Meridian unifies primary and specialized care so patients move seamlessly between disciplines without starting over each time.</p>
+  </div>
+
+  <div class="services-tabs r">
+    <div class="stab active" data-tab="0">Primary Care</div>
+    <div class="stab" data-tab="1">Cardiology</div>
+    <div class="stab" data-tab="2">Sports Medicine</div>
+    <div class="stab" data-tab="3">Internal Medicine</div>
+    <div class="stab" data-tab="4">Women's Health</div>
+  </div>
+
+  <div class="service-panels">
+    <div class="service-panel active">
+      <div class="sp-left">
+        <div class="sp-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4.5 12h15M12 4.5v15"/></svg>
+        </div>
+        <div class="sp-name">Primary Care</div>
+        <p class="sp-desc">Your medical home for everything. Our primary care physicians take the time to build a complete picture of your health — not just the reason for today's visit. Annual physicals, chronic disease management, sick visits, and preventive care under one familiar roof.</p>
+        <a href="#contact" class="sp-link">Schedule a Visit <svg width="12" height="8" viewBox="0 0 14 10" fill="none"><path d="M1 5h12M8 1.5l3.5 3.5L8 8.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+      <div class="sp-right">
+        <div class="sp-what">What's Included</div>
+        <ul class="sp-list">
+          <li>Annual physical exams and wellness screenings</li>
+          <li>Chronic disease management — diabetes, hypertension, asthma</li>
+          <li>Acute illness and injury evaluation</li>
+          <li>Immunizations and travel medicine</li>
+          <li>Prescription management and medication reviews</li>
+          <li>Coordination with specialists within Meridian</li>
+          <li>Secure patient portal with 24-hour messaging</li>
+        </ul>
+      </div>
+    </div>
+    <div class="service-panel">
+      <div class="sp-left">
+        <div class="sp-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+        </div>
+        <div class="sp-name">Cardiology</div>
+        <p class="sp-desc">Preventive and interventional cardiology delivered by fellowship-trained cardiologists. We offer comprehensive cardiac evaluations, advanced imaging, and ongoing heart health management — all without the 6-week specialist wait.</p>
+        <a href="#contact" class="sp-link">Schedule a Visit <svg width="12" height="8" viewBox="0 0 14 10" fill="none"><path d="M1 5h12M8 1.5l3.5 3.5L8 8.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+      <div class="sp-right">
+        <div class="sp-what">What's Included</div>
+        <ul class="sp-list">
+          <li>EKG and echocardiogram interpretation</li>
+          <li>Cardiac stress testing and Holter monitoring</li>
+          <li>Hypertension and cholesterol management</li>
+          <li>Atrial fibrillation evaluation and management</li>
+          <li>Heart failure monitoring programs</li>
+          <li>Pre-surgical cardiac clearance</li>
+          <li>Risk stratification and lifestyle counseling</li>
+        </ul>
+      </div>
+    </div>
+    <div class="service-panel">
+      <div class="sp-left">
+        <div class="sp-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="5" r="3"/><path d="M6.5 8.5L3 22M17.5 8.5L21 22M9 14h6M8 22h8"/></svg>
+        </div>
+        <div class="sp-name">Sports Medicine</div>
+        <p class="sp-desc">Injury evaluation, rehabilitation planning, and performance optimization — for athletes from high school to professional level. Our sports medicine team works directly with Los Angeles sports organizations and brings that same standard to every patient.</p>
+        <a href="#contact" class="sp-link">Schedule a Visit <svg width="12" height="8" viewBox="0 0 14 10" fill="none"><path d="M1 5h12M8 1.5l3.5 3.5L8 8.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+      <div class="sp-right">
+        <div class="sp-what">What's Included</div>
+        <ul class="sp-list">
+          <li>Acute sports injury evaluation and treatment</li>
+          <li>Concussion management protocol</li>
+          <li>Platelet-rich plasma (PRP) therapy</li>
+          <li>Return-to-play clearances</li>
+          <li>Movement assessment and biomechanics review</li>
+          <li>Pre-participation sports physicals</li>
+          <li>Nutrition and performance optimization consultations</li>
+        </ul>
+      </div>
+    </div>
+    <div class="service-panel">
+      <div class="sp-left">
+        <div class="sp-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="9" y="2" width="6" height="4" rx="1"/><path d="M9 2H7a2 2 0 00-2 2v16a2 2 0 002 2h10a2 2 0 002-2V4a2 2 0 00-2-2h-2"/><path d="M9 12h6M9 16h4"/></svg>
+        </div>
+        <div class="sp-name">Internal Medicine</div>
+        <p class="sp-desc">Expert management of complex adult conditions requiring more than a standard primary care visit. Our internal medicine physicians are trained to investigate, diagnose, and manage multi-system illnesses that other practices refer out.</p>
+        <a href="#contact" class="sp-link">Schedule a Visit <svg width="12" height="8" viewBox="0 0 14 10" fill="none"><path d="M1 5h12M8 1.5l3.5 3.5L8 8.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+      <div class="sp-right">
+        <div class="sp-what">What's Included</div>
+        <ul class="sp-list">
+          <li>Diabetes and metabolic syndrome management</li>
+          <li>Thyroid and endocrine disorder treatment</li>
+          <li>Autoimmune disease evaluation and co-management</li>
+          <li>Kidney and liver function monitoring</li>
+          <li>Complex medication management</li>
+          <li>Hospitalist coordination and discharge planning</li>
+          <li>Advanced lab panel interpretation</li>
+        </ul>
+      </div>
+    </div>
+    <div class="service-panel">
+      <div class="sp-left">
+        <div class="sp-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0112 2a8 8 0 018 8.2c0 7.3-8 11.8-8 11.8z"/></svg>
+        </div>
+        <div class="sp-name">Women's Health</div>
+        <p class="sp-desc">Comprehensive, whole-person women's healthcare from preventive screenings to hormonal health. Our physicians build long-term relationships — not just annual visits — with every patient in their care.</p>
+        <a href="#contact" class="sp-link">Schedule a Visit <svg width="12" height="8" viewBox="0 0 14 10" fill="none"><path d="M1 5h12M8 1.5l3.5 3.5L8 8.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+      <div class="sp-right">
+        <div class="sp-what">What's Included</div>
+        <ul class="sp-list">
+          <li>Well-woman exams and Pap smears</li>
+          <li>Hormone evaluation and menopause management</li>
+          <li>Reproductive health and contraception counseling</li>
+          <li>Breast health screening coordination</li>
+          <li>Osteoporosis screening and prevention</li>
+          <li>Mental health integration for postpartum care</li>
+          <li>Chronic condition management specific to women</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NUMBERS -->
+<div class="numbers">
+  <div class="num-cell r">
+    <div class="num-val" data-to="12000" data-suf="+" data-comma="1">0</div>
+    <div class="num-label">Patients Served</div>
+  </div>
+  <div class="num-cell r d1">
+    <div class="num-val" data-to="18">0<sup>+</sup></div>
+    <div class="num-label">Board-Certified Physicians</div>
+  </div>
+  <div class="num-cell r d2">
+    <div class="num-val" data-to="4.9" data-dec="1">0<sup>★</sup></div>
+    <div class="num-label">Google Patient Rating</div>
+  </div>
+  <div class="num-cell r d3">
+    <div class="num-val" data-to="98" data-suf="%">0</div>
+    <div class="num-label">Patient Satisfaction Score</div>
+  </div>
+</div>
+
+<!-- DOCTORS -->
+<section class="doctors" id="doctors">
+  <div class="doctors-head">
+    <div>
+      <div class="section-eyebrow r">Meet the Team</div>
+      <h2 class="section-h r d1">Physicians Who Stay<br><em>Curious About You</em></h2>
+    </div>
+    <a href="#contact" class="see-all r">All Physicians <svg width="12" height="8" viewBox="0 0 14 10" fill="none"><path d="M1 5h12M8 1.5l3.5 3.5L8 8.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+  </div>
+  <div class="doctors-grid">
+    <div class="doc-card r">
+      <div class="doc-photo">
+        <img src="https://images.unsplash.com/photo-1643297654416-05795d62e39c?w=600&q=80&auto=format&fit=crop" alt="Dr. Ava Morris">
+        <div class="doc-badge">Primary Care</div>
+      </div>
+      <div class="doc-info">
+        <div class="doc-name">Dr. Ava Morris, MD</div>
+        <div class="doc-role">Chief of Primary Care</div>
+        <p class="doc-bio">UCLA-trained internist. 14 years in LA. Fluent in English and Farsi. Known for unhurried appointments and sharp diagnostic instincts.</p>
+      </div>
+    </div>
+    <div class="doc-card r d1">
+      <div class="doc-photo">
+        <img src="https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=600&q=80&auto=format&fit=crop" alt="Dr. James Okonkwo">
+        <div class="doc-badge">Cardiology</div>
+      </div>
+      <div class="doc-info">
+        <div class="doc-name">Dr. James Okonkwo, MD</div>
+        <div class="doc-role">Director of Cardiology</div>
+        <p class="doc-bio">Cedars-Sinai fellowship. Specializes in preventive cardiology and advanced imaging for high-risk patients. Published researcher.</p>
+      </div>
+    </div>
+    <div class="doc-card r d2">
+      <div class="doc-photo">
+        <img src="https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=600&q=80&auto=format&fit=crop" alt="Dr. Rachel Kim">
+        <div class="doc-badge">Sports Medicine</div>
+      </div>
+      <div class="doc-info">
+        <div class="doc-name">Dr. Rachel Kim, DO</div>
+        <div class="doc-role">Sports Medicine Specialist</div>
+        <p class="doc-bio">Team physician for two LA professional organizations. Expertise in regenerative orthopedics, PRP, and return-to-sport protocols.</p>
+      </div>
+    </div>
+    <div class="doc-card r d3">
+      <div class="doc-photo">
+        <img src="https://images.unsplash.com/photo-1537368910025-700350fe46c7?w=600&q=80&auto=format&fit=crop" alt="Dr. Elias Nassif">
+        <div class="doc-badge">Internal Medicine</div>
+      </div>
+      <div class="doc-info">
+        <div class="doc-name">Dr. Elias Nassif, MD</div>
+        <div class="doc-role">Internal Medicine</div>
+        <p class="doc-bio">USC Keck School of Medicine. Specializes in complex multi-system conditions. Speaks Arabic and English. Available same-week.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process" id="process">
+  <div class="process-head">
+    <div class="section-eyebrow r">Your First Visit</div>
+    <h2 class="section-h r d1">Simple From the<br><em>First Click Forward</em></h2>
+  </div>
+  <div class="process-flow">
+    <div class="pstep r">
+      <div class="pstep-num">01</div>
+      <div class="pstep-name">Book Online</div>
+      <p class="pstep-desc">Choose your doctor, visit type, and time. Done in under 2 minutes — no hold music.</p>
+    </div>
+    <div class="pstep r d1">
+      <div class="pstep-num">02</div>
+      <div class="pstep-name">Digital Intake</div>
+      <p class="pstep-desc">Complete your health history from your phone before you arrive. Your doctor reviews it in advance.</p>
+    </div>
+    <div class="pstep r d2">
+      <div class="pstep-num">03</div>
+      <div class="pstep-name">Your Appointment</div>
+      <p class="pstep-desc">Unhurried, focused time with your physician. Not 8 minutes — a real conversation.</p>
+    </div>
+    <div class="pstep r d3">
+      <div class="pstep-num">04</div>
+      <div class="pstep-name">Ongoing Care</div>
+      <p class="pstep-desc">Results and follow-ups delivered to your portal. Reach your care team anytime with direct messaging.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="test-bg-text">MERIDIAN</div>
+  <div class="test-head">
+    <div class="section-eyebrow r">Patient Stories</div>
+    <h2 class="section-h r d1">What Our Patients <em>Actually Say</em></h2>
+  </div>
+  <div class="test-grid">
+    <div class="tcard r">
+      <div class="tcard-stars">★★★★★</div>
+      <p class="tcard-text">Dr. Morris read my full history before walking in. She referenced something from a visit 8 months ago that no other doctor had ever connected. I finally feel like someone is actually tracking my health, not just treating symptoms.</p>
+      <div class="tcard-author">Marcus T.</div>
+      <div class="tcard-detail">Primary Care Patient · Silver Lake</div>
+    </div>
+    <div class="tcard r d1">
+      <div class="tcard-stars">★★★★★</div>
+      <p class="tcard-text">I booked Monday, saw Dr. Okonkwo on Wednesday. He spent 45 minutes walking through my echo results with a whiteboard. I left knowing exactly what my numbers meant. Never experienced that anywhere in LA before.</p>
+      <div class="tcard-author">Diana R.</div>
+      <div class="tcard-detail">Cardiology Patient · Brentwood</div>
+    </div>
+    <div class="tcard r d2">
+      <div class="tcard-stars">★★★★★</div>
+      <p class="tcard-text">I'm a competitive runner who's been through three practices that just told me to rest. Dr. Kim diagnosed a stress fracture I'd had for two years, built a real return plan, and had me back racing in 10 weeks.</p>
+      <div class="tcard-author">Jason P.</div>
+      <div class="tcard-detail">Sports Medicine Patient · Los Feliz</div>
+    </div>
+  </div>
+</section>
+
+<!-- INSURANCE -->
+<div class="insurance">
+  <div class="ins-row">
+    <div class="ins-label">Accepted Insurance</div>
+    <div class="ins-name">Blue Cross</div>
+    <div class="ins-name">Aetna</div>
+    <div class="ins-name">Cigna</div>
+    <div class="ins-name">UnitedHealth</div>
+    <div class="ins-name">Anthem</div>
+    <div class="ins-name">Humana</div>
+    <div class="ins-name">Medicare</div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-wrap">
+    <div class="contact-left">
+      <div class="section-eyebrow r">Get in Touch</div>
+      <h2 class="section-h r d1">Ready to Find<br>a Doctor You Trust?</h2>
+      <p class="r d2">Fill out the form and a patient coordinator will confirm your appointment within 2 business hours.</p>
+      <div class="cinfo r d2">
+        <div class="cinfo-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.18 1H3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L4.91 8.1a16 16 0 006 6l.62-.62a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg></div>
+        <div><div class="cinfo-l">Phone</div><div class="cinfo-v">(310) 555-0244</div></div>
+      </div>
+      <div class="cinfo r d3">
+        <div class="cinfo-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+        <div><div class="cinfo-l">Email</div><div class="cinfo-v">appointments@meridianmedla.com</div></div>
+      </div>
+      <div class="cinfo r d4">
+        <div class="cinfo-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <div><div class="cinfo-l">Location</div><div class="cinfo-v">8401 Sunset Blvd, Suite 300<br>West Hollywood, CA 90069</div></div>
+      </div>
+    </div>
+    <div class="cform r d1">
+      <h3>Request an Appointment</h3>
+      <form onsubmit="handleForm(event)">
+        <div class="frow">
+          <div class="fg"><label>First Name</label><input type="text" placeholder="James"></div>
+          <div class="fg"><label>Last Name</label><input type="text" placeholder="Peterson"></div>
+        </div>
+        <div class="fg"><label>Email Address</label><input type="email" placeholder="james@email.com"></div>
+        <div class="fg"><label>Phone Number</label><input type="tel" placeholder="(310) 555-0000"></div>
+        <div class="fg">
+          <label>Type of Visit</label>
+          <select>
+            <option value="">Select a specialty</option>
+            <option>Primary Care — New Patient</option>
+            <option>Primary Care — Follow-Up</option>
+            <option>Cardiology</option>
+            <option>Sports Medicine</option>
+            <option>Internal Medicine</option>
+            <option>Women's Health</option>
+            <option>Preventive Screening</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label>Insurance Provider</label>
+          <select>
+            <option value="">Select insurance</option>
+            <option>Blue Cross Blue Shield</option>
+            <option>Aetna</option><option>Cigna</option>
+            <option>UnitedHealthcare</option>
+            <option>Anthem</option><option>Humana</option>
+            <option>Medicare</option><option>Self-Pay</option>
+          </select>
+        </div>
+        <div class="fg"><label>Brief Reason for Visit</label><textarea placeholder="What brings you in?"></textarea></div>
+        <button type="submit" class="fsubmit">Request Appointment</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="f-logo">Meridian<span>.</span></div>
+  <ul class="f-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#doctors">Doctors</a></li>
+    <li><a href="#process">Patient Journey</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="f-copy">© 2025 Meridian Medical Group · West Hollywood, CA</div>
+</footer>
+
+<script>
+// Progress bar
+window.addEventListener('scroll',()=>{
+  const pct=(scrollY/(document.body.scrollHeight-innerHeight))*100;
+  document.getElementById('progress').style.width=pct+'%';
+});
+
+// Nav
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('solid',scrollY>40));
+
+// Hero image lazy load
+const heroImg=document.getElementById('heroImg');
+const bg=new Image();
+bg.onload=()=>heroImg.classList.add('loaded');
+bg.src='https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=1800&q=80&auto=format&fit=crop';
+
+// Reveal
+const reveals=document.querySelectorAll('.r');
+const rObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('in'); });
+},{threshold:0.08,rootMargin:'0px 0px -20px 0px'});
+reveals.forEach(el=>rObs.observe(el));
+
+// Service tabs
+document.querySelectorAll('.stab').forEach((tab,i)=>{
+  tab.addEventListener('click',()=>{
+    document.querySelectorAll('.stab').forEach(t=>t.classList.remove('active'));
+    document.querySelectorAll('.service-panel').forEach(p=>p.classList.remove('active'));
+    tab.classList.add('active');
+    document.querySelectorAll('.service-panel')[i].classList.add('active');
+  });
+});
+
+// Number counters
+const cells=document.querySelectorAll('.num-cell');
+const cObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting&&!e.target._counted){
+      e.target._counted=true;
+      e.target.classList.add('triggered');
+      const el=e.target.querySelector('.num-val');
+      const target=parseFloat(el.dataset.to);
+      const suf=el.dataset.suf||'';
+      const isDec=!!el.dataset.dec;
+      const useComma=!!el.dataset.comma;
+      const sup=el.querySelector('sup')?el.querySelector('sup').outerHTML:'';
+      const dur=1800,start=performance.now();
+      (function tick(now){
+        const p=Math.min((now-start)/dur,1);
+        const e2=1-Math.pow(1-p,3);
+        const v=isDec?(target*e2).toFixed(1)
+                :useComma?Math.round(target*e2).toLocaleString()
+                :Math.round(target*e2);
+        el.innerHTML=v+suf+sup;
+        if(p<1)requestAnimationFrame(tick);
+        else el.innerHTML=(isDec?target.toFixed(1):useComma?target.toLocaleString():target)+suf+sup;
+      })(start);
+    }
+  });
+},{threshold:0.3});
+cells.forEach(c=>cObs.observe(c));
+
+// Form
+function handleForm(e){
+  e.preventDefault();
+  const btn=e.target.querySelector('.fsubmit');
+  btn.textContent='Appointment Requested — We\'ll Confirm Shortly';
+  btn.style.background='#1a3060';btn.disabled=true;
+}
+</script>
+</body>
+</html>
